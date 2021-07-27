@@ -1,0 +1,41 @@
+server:
+  port: 8301
+
+spring:
+  application:
+    name: Fast-Gateway
+
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 20
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    instance-info-replication-interval-seconds: 30
+    registry-fetch-interval-seconds: 3
+    serviceUrl:
+      defaultZone: http://fast:123456@localhost:8001/register/eureka/
+
+zuul:
+  routes:
+    auth:
+      # 以 /auth/** 开头的链接会转发到 Fast-Auth 的服务上
+      path: /auth/**
+      serviceId: Fast-Auth
+      sensitiveHeaders: "*"
+    system:
+      path: /system/**
+      serviceId: Fast-Server-System
+      sensitiveHeaders: "*"
+    test:
+        path: /test/**
+        serviceId: Fast-Server-Test
+        sensitiveHeaders: "*"
+  retryable: true
+  ignored-services: "*"
+  ribbon:
+    eager-load:
+      enabled: true
+
+ribbon:
+  ReadTimeout: 3000

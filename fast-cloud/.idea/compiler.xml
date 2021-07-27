@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="fast-server-system" />
+        <module name="fast-common" />
+        <module name="fast-auth" />
+        <module name="fast-gateway" />
+        <module name="fast-register" />
+        <module name="fast-server-test" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="fast-auth" options="-parameters" />
+      <module name="fast-common" options="-parameters" />
+      <module name="fast-gateway" options="-parameters" />
+      <module name="fast-register" options="-parameters" />
+      <module name="fast-server" options="-parameters" />
+      <module name="fast-server-system" options="-parameters" />
+      <module name="fast-server-test" options="-parameters" />
+    </option>
+  </component>
+</project>
