@@ -36,6 +36,10 @@ zuul:
   ribbon:
     eager-load:
       enabled: true
+  # 使用自定义的异常过滤器，需要让默认的失效
+  SendErrorFilter:
+    error:
+      disable: true
 
 ribbon:
   ReadTimeout: 3000

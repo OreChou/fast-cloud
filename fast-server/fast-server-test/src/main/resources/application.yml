@@ -20,3 +20,11 @@ security:
     resource:
       id: ${spring.application.name}
       user-info-uri: http://localhost:8301/auth/user
+
+# 让 Feign 的回退生效
+feign:
+  hystrix:
+    enabled: true
+# 把 SecurityContext 对象从你当前主线程传输到 Hystrix 线程
+hystrix:
+  shareSecurityContext: true
