@@ -15,4 +15,17 @@ public class FastConstant {
      */
     public static final String ZUUL_TOKEN_VALUE = "fast:zuul:123456";
 
+    /**
+     * gif类型
+     */
+    public static final String GIF = "gif";
+    /**
+     * png类型
+     */
+    public static final String PNG = "png";
+
+    /**
+     * 验证码 key前缀
+     */
+    public static final String CODE_PREFIX = "fast.captcha.";
 }

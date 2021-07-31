@@ -1,5 +1,7 @@
 package org.orechou.fast.auth.configure;
 
+import org.apache.commons.lang3.StringUtils;
+import org.orechou.fast.auth.properties.FastAuthProperties;
 import org.orechou.fast.common.handler.FastAccessDeniedHandler;
 import org.orechou.fast.common.handler.FastAuthExceptionEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +23,21 @@ public class FastResourceServerConfigure extends ResourceServerConfigurerAdapter
     private FastAccessDeniedHandler accessDeniedHandler;
     @Autowired
     private FastAuthExceptionEntryPoint exceptionEntryPoint;
+    @Autowired
+    private FastAuthProperties properties;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+
+        String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(properties.getAnonUrl(), ",");
+
         http.csrf().disable()
                 .requestMatchers().antMatchers("/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**").authenticated();
+                .antMatchers(anonUrls).permitAll()
+                .antMatchers("/**").authenticated()
+                .and().httpBasic();
     }
 
     @Override

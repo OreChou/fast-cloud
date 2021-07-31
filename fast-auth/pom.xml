@@ -14,6 +14,10 @@
     <name>Fast-Auth</name>
     <description>Fast-Cloud 认证服务器</description>
 
+    <properties>
+        <easy-captcha.version>1.6.2</easy-captcha.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.orechou</groupId>
@@ -23,6 +27,15 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>${easy-captcha.version}</version>
         </dependency>
     </dependencies>
 

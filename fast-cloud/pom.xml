@@ -29,6 +29,8 @@
     <properties>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
         <fastjson.version>1.2.51</fastjson.version>
+        <mybatis-plus.version>3.1.2</mybatis-plus.version>
+        <dynamic-datasource.version>2.5.4</dynamic-datasource.version>
     </properties>
 
     <dependencyManagement>

@@ -1,5 +1,6 @@
 package org.orechou.fast.auth.configure;
 
+import org.orechou.fast.auth.filter.ValidateCodeFilter;
 import org.orechou.fast.auth.service.FastUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @author OreChou
@@ -22,6 +24,9 @@ public class FastSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private FastUserDetailService userDetailService;
+
+    @Autowired
+    private ValidateCodeFilter validateCodeFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -36,8 +41,8 @@ public class FastSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.requestMatchers()
-                // 安全配置类只对 /oauth/** 的请求有效
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .requestMatchers()
                 .antMatchers("/oauth/**")
                 .and()
                 .authorizeRequests()
