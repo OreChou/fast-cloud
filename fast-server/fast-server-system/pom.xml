@@ -11,7 +11,20 @@
 
     <artifactId>fast-server-system</artifactId>
     <name>Fast-Server-Test</name>
-    <description>Fast-Server-Test测试服务模块</description>
+    <description>Fast-Server-System 服务模块</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

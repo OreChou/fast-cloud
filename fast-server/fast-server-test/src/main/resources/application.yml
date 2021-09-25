@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: Fast-Server-Test
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration
 
 eureka:
   instance:
