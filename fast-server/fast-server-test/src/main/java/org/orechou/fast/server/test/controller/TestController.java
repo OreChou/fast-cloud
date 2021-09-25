@@ -1,5 +1,6 @@
 package org.orechou.fast.server.test.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.orechou.fast.server.test.service.IHelloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,6 +13,7 @@ import java.security.Principal;
  * @author OreChou
  * @date 2021/07/27
  */
+@Slf4j
 @RestController
 public class TestController {
 
@@ -20,6 +22,7 @@ public class TestController {
 
     @GetMapping("hello")
     public String hello(String name) {
+        log.info("Feign 调用 fast-server-system 的 hello 服务");
         return helloService.hello(name);
     }
 
