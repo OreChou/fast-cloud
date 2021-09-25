@@ -29,12 +29,12 @@ public class FastServerSystemResourceServerConfigure extends ResourceServerConfi
     @Override
     public void configure(HttpSecurity http) throws Exception {
         String[] anonUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(properties.getAnonUrl(), ",");
-
         http.csrf().disable()
                 .requestMatchers().antMatchers("/**")
                 .and()
                 .authorizeRequests()
                 .antMatchers(anonUrls).permitAll()
+                .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/**").authenticated();
     }
 

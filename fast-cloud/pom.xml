@@ -13,6 +13,7 @@
         <module>../fast-auth</module>
         <module>../fast-gateway</module>
         <module>../fast-server</module>
+        <module>../fast-monitor</module>
     </modules>
     <packaging>pom</packaging>
 

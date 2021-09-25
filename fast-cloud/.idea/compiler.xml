@@ -8,8 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="fast-server-system" />
-        <module name="fast-common" />
         <module name="fast-auth" />
+        <module name="fast-monitor-admin" />
+        <module name="fast-common" />
         <module name="fast-gateway" />
         <module name="fast-register" />
         <module name="fast-server-test" />
@@ -21,6 +22,8 @@
       <module name="fast-auth" options="-parameters" />
       <module name="fast-common" options="-parameters" />
       <module name="fast-gateway" options="-parameters" />
+      <module name="fast-monitor" options="-parameters" />
+      <module name="fast-monitor-admin" options="-parameters" />
       <module name="fast-register" options="-parameters" />
       <module name="fast-server" options="-parameters" />
       <module name="fast-server-system" options="-parameters" />

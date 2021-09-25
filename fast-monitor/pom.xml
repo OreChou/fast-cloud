@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>fast-cloud</artifactId>
+        <groupId>org.orechou</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../fast-cloud/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>fast-monitor</artifactId>
+    <packaging>pom</packaging>
+    <name>Fast-Monitor</name>
+    <description>Fast-Monitor 监控模块（聚合）</description>
+    <modules>
+        <module>fast-monitor-admin</module>
+    </modules>
+
+</project>

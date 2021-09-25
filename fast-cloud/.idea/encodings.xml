@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/../fast-auth/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../fast-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../fast-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../fast-monitor/fast-monitor-admin/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../fast-register/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../fast-server/fast-server-system/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../fast-server/fast-server-test/src/main/java" charset="UTF-8" />
