@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>fast-server-test</artifactId>
+    <name>Fast-Server-Test</name>
+    <description>Fast-Server-Test 服务模块</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

@@ -7,9 +7,11 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:8401
+        url: http://${fast-monitor-admin}:8401
         username: fast
         password: 123456
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
 
 info:
   app:
@@ -36,7 +38,7 @@ eureka:
     instance-info-replication-interval-seconds: 30
     registry-fetch-interval-seconds: 3
     serviceUrl:
-      defaultZone: http://fast:123456@localhost:8001/register/eureka/
+      defaultZone: http://fast:123456@${fast-register}:8001/register/eureka/
 
 zuul:
   routes:

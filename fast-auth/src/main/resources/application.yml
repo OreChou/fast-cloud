@@ -4,9 +4,15 @@ server:
 spring:
   application:
     name: Fast-Auth
+  boot:
+    admin:
+      client:
+        url: http://${fast-monitor-admin}:8401
+        username: fast
+        password: 123456
   redis:
     database: 0
-    host: 127.0.0.1
+    host: ${redis.url}
     port: 6379
     lettuce:
       pool:
@@ -28,9 +34,9 @@ spring:
       datasource:
         base:
           username: root
-          password: root
+          password: 123456
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhost:3306/fast_cloud_base?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+          url: jdbc:mysql://${mysql.url}:3306/fast_cloud_base?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
 
 mybatis-plus:
   type-aliases-package: org.orechou.fast.common.entity.system
@@ -49,4 +55,19 @@ eureka:
     instance-info-replication-interval-seconds: 30
     registry-fetch-interval-seconds: 3
     serviceUrl:
-      defaultZone: http://fast:123456@localhost:8001/register/eureka/
+      defaultZone: http://fast:123456@${fast-register}:8001/register/eureka/
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: "@project.description@"
+    version: "@project.version@"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS

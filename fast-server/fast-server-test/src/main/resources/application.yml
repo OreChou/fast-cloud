@@ -4,8 +4,14 @@ server:
 spring:
   application:
     name: Fast-Server-Test
+  boot:
+    admin:
+      client:
+        url: http://${fast-monitor-admin}:8401
+        username: fast
+        password: 123456
   autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration,org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
   zipkin:
     sender:
       type: rabbit
@@ -13,7 +19,7 @@ spring:
     sampler:
       probability: 1
   rabbitmq:
-    host: localhost
+    host: ${rabbitmq.url}
     port: 5672
     username: fast
     password: 123456
@@ -27,12 +33,12 @@ eureka:
     instance-info-replication-interval-seconds: 30
     registry-fetch-interval-seconds: 3
     serviceUrl:
-      defaultZone: http://fast:123456@localhost:8001/register/eureka/
+      defaultZone: http://fast:123456@${fast-register}:8001/register/eureka/
 security:
   oauth2:
     resource:
       id: ${spring.application.name}
-      user-info-uri: http://localhost:8301/auth/user
+      user-info-uri: http://${fast-gateway}:8301/auth/user
 
 # 让 Feign 的回退生效
 feign:
@@ -41,3 +47,18 @@ feign:
 # 把 SecurityContext 对象从你当前主线程传输到 Hystrix 线程
 hystrix:
   shareSecurityContext: true
+
+info:
+  app:
+    name: ${spring.application.name}
+    description: "@project.description@"
+    version: "@project.version@"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS

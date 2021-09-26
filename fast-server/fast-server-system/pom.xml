@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>fast-server-system</artifactId>
-    <name>Fast-Server-Test</name>
+    <name>Fast-Server-System</name>
     <description>Fast-Server-System 服务模块</description>
 
     <dependencies>

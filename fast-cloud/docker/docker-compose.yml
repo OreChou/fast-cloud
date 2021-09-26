@@ -1,0 +1,85 @@
+version: '3'
+
+services:
+  fast-register:
+    image: fast-register:latest # 指定基础镜像，就是上一节中我们自己构建的镜像
+    container_name: fast-register # 容器名称
+    volumes:
+      - "/fast/log:/log" #日志挂载
+    command:
+      - "--fast-register=101.35.133.137" # 通过command指定地址变量值
+      - "--fast-monitor-admin=101.35.133.137"
+    ports:
+      - 8001:8001 # 端口映射
+  fast-monitor-admin:
+    image: fast-monitor-admin:latest
+    container_name: fast-monitor-admin
+    volumes:
+      - "/fast/log:/log"
+    ports:
+      - 8401:8401
+  fast-gateway:
+    image: fast-gateway:latest
+    container_name: fast-gateway
+    depends_on:
+      - fast-register
+    volumes:
+      - "/fast/log:/log"
+    command:
+      - "--fast-register=101.35.133.137"
+      - "--fast-monitor-admin=101.35.133.137"
+    ports:
+      - 8301:8301
+  fast-auth:
+    image: fast-auth:latest
+    container_name: fast-auth
+    depends_on:
+      - fast-register
+    volumes:
+      - "/fast/log:/log"
+    command:
+      - "--mysql.url=101.35.133.137"
+      - "--redis.url=101.35.133.137"
+      - "--fast-register=101.35.133.137"
+      - "--fast-monitor-admin=101.35.133.137"
+  fast-server-system:
+    image: fast-server-system:latest
+    container_name: fast-server-system
+    depends_on:
+      - fast-register
+    volumes:
+      - "/fast/log:/log"
+    command:
+      - "--mysql.url=101.35.133.137"
+      - "--rabbitmq.url=101.35.133.137"
+      - "--fast-register=101.35.133.137"
+      - "--fast-monitor-admin=101.35.133.137"
+      - "--fast-gateway=101.35.133.137"
+  fast-server-test:
+    image: fast-server-test:latest
+    container_name: fast-server-test
+    depends_on:
+      - fast-register
+    volumes:
+      - "/fast/log:/log"
+    command:
+      - "--rabbitmq.url=101.35.133.137"
+      - "--fast-register=101.35.133.137"
+      - "--fast-monitor-admin=101.35.133.137"
+      - "--fast-gateway=101.35.133.137"
+  zipkin-server:
+    image: zipkin-server
+    container_name: zipkin-server
+    command:
+      - "--server.port=8402"
+      - "--zipkin.storage.type=mysql"
+      - "--zipkin.storage.mysql.db=fast_cloud_base"
+      - "--zipkin.storage.mysql.username=root"
+      - "--zipkin.storage.mysql.password=123456"
+      - "--zipkin.storage.mysql.host=101.35.133.137"
+      - "--zipkin.storage.mysql.port=3306"
+      - "--zipkin.collector.rabbitmq.addresses=101.35.133.137:5672"
+      - "--zipkin.collector.rabbitmq.username=fast"
+      - "--zipkin.collector.rabbitmq.password=123456"
+    ports:
+      - 8402:8402
