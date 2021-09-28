@@ -18,8 +18,13 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
@@ -61,7 +66,9 @@ public class FastAuthorizationServerConfigure extends AuthorizationServerConfigu
                 builder.withClient(client.getClient())
                         .secret(passwordEncoder.encode(client.getSecret()))
                         .authorizedGrantTypes(grantTypes)
-                        .scopes(client.getScope());
+                        .scopes(client.getScope())
+                        .accessTokenValiditySeconds(authProperties.getAccessTokenValiditySeconds())
+                        .refreshTokenValiditySeconds(authProperties.getRefreshTokenValiditySeconds());
             }
         }
     }
@@ -70,15 +77,16 @@ public class FastAuthorizationServerConfigure extends AuthorizationServerConfigu
     @SuppressWarnings("all")
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.tokenStore(tokenStore())
+                .accessTokenConverter(jwtAccessTokenConverter())
                 .userDetailsService(userDetailService)
                 .authenticationManager(authenticationManager)
-                .tokenServices(defaultTokenServices())
                 .exceptionTranslator(exceptionTranslator);
     }
 
     @Bean
     public TokenStore tokenStore() {
-        return new RedisTokenStore(redisConnectionFactory);
+//        return new RedisTokenStore(redisConnectionFactory);
+        return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
     @Primary
@@ -90,6 +98,17 @@ public class FastAuthorizationServerConfigure extends AuthorizationServerConfigu
         tokenServices.setAccessTokenValiditySeconds(authProperties.getAccessTokenValiditySeconds());
         tokenServices.setRefreshTokenValiditySeconds(authProperties.getRefreshTokenValiditySeconds());
         return tokenServices;
+    }
+
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
+        DefaultAccessTokenConverter defaultAccessTokenConverter = (DefaultAccessTokenConverter) accessTokenConverter.getAccessTokenConverter();
+        DefaultUserAuthenticationConverter userAuthenticationConverter = new DefaultUserAuthenticationConverter();
+        userAuthenticationConverter.setUserDetailsService(userDetailService);
+        defaultAccessTokenConverter.setUserTokenConverter(userAuthenticationConverter);
+        accessTokenConverter.setSigningKey("fast");
+        return accessTokenConverter;
     }
 
 }
